@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klinik Gigi Dentia | Senyum Cemerlang Mulai dari Sini</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0d9488', /* Teal 600 */
+                        primaryHover: '#0f766e', /* Teal 700 */
+                        secondary: '#ccfbf1', /* Teal 50 */
+                        dark: '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS for Animations -->
+    <style>
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Blob Animation for Hero Image */
+        .blob-shape {
+            animation: morph 8s ease-in-out infinite;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            transition: all 1s ease-in-out;
+        }
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-slate-50 antialiased overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                    <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white text-xl">
+                        <i class="fa-solid fa-tooth"></i>
+                    </div>
+                    <span class="font-bold text-2xl text-dark tracking-tight">Dentia<span class="text-primary">.</span></span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#beranda" class="text-gray-600 hover:text-primary font-medium transition-colors">Beranda</a>
+                    <a href="#layanan" class="text-gray-600 hover:text-primary font-medium transition-colors">Layanan</a>
+                    <a href="#tentang" class="text-gray-600 hover:text-primary font-medium transition-colors">Tentang Kami</a>
+                    <a href="#testimoni" class="text-gray-600 hover:text-primary font-medium transition-colors">Testimoni</a>
+                    <a href="#kontak" class="bg-primary text-white px-6 py-2.5 rounded-full hover:bg-primaryHover font-medium transition-all transform hover:scale-105 shadow-lg shadow-teal-500/30">
+                        Buat Janji
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none text-2xl">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
+            <div class="px-4 pt-2 pb-6 space-y-1 text-center flex flex-col gap-2">
+                <a href="#beranda" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-primary hover:bg-secondary rounded-lg">Beranda</a>
+                <a href="#layanan" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-primary hover:bg-secondary rounded-lg">Layanan</a>
+                <a href="#tentang" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-primary hover:bg-secondary rounded-lg">Tentang Kami</a>
+                <a href="#kontak" class="block px-3 py-3 mt-4 text-base font-medium text-white bg-primary rounded-full mx-4">Buat Janji Sekarang</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Background decoration -->
+        <div class="absolute top-0 right-0 -translate-y-12 translate-x-1/3 w-[800px] h-[800px] bg-secondary rounded-full blur-3xl opacity-50 -z-10"></div>
+        <div class="absolute bottom-0 left-0 translate-y-1/3 -translate-x-1/3 w-[600px] h-[600px] bg-teal-100 rounded-full blur-3xl opacity-40 -z-10"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="reveal">
+                    <div class="inline-block px-4 py-2 bg-secondary text-primary font-semibold rounded-full mb-6 text-sm">
+                        <i class="fa-solid fa-star text-yellow-400 mr-1"></i> Klinik Gigi Terpercaya di Kota Anda
+                    </div>
+                    <h1 class="text-4xl lg:text-6xl font-bold text-dark leading-tight mb-6">
+                        Wujudkan <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-400">Senyum Percaya Diri</span> Setiap Hari.
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        Kami menyediakan perawatan gigi profesional dengan teknologi terkini dan dokter spesialis berpengalaman. Kenyamanan dan kesehatan gigi Anda adalah prioritas kami.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="https://wa.me/6281234567890" target="_blank" class="bg-primary text-white px-8 py-4 rounded-full text-center hover:bg-primaryHover font-semibold transition-all transform hover:-translate-y-1 shadow-xl shadow-teal-500/30 flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-xl"></i> Konsultasi Gratis
+                        </a>
+                        <a href="#layanan" class="bg-white text-dark border-2 border-gray-200 px-8 py-4 rounded-full text-center hover:border-primary hover:text-primary font-semibold transition-all flex items-center justify-center gap-2">
+                            Lihat Layanan
+                        </a>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="mt-12 grid grid-cols-3 gap-6 pt-8 border-t border-gray-200">
+                        <div>
+                            <h3 class="text-3xl font-bold text-dark">5k+</h3>
+                            <p class="text-sm text-gray-500 mt-1">Pasien Puas</p>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold text-dark">10+</h3>
+                            <p class="text-sm text-gray-500 mt-1">Dokter Spesialis</p>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold text-dark">15</h3>
+                            <p class="text-sm text-gray-500 mt-1">Tahun Pengalaman</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image / Visual -->
+                <div class="relative lg:ml-auto reveal delay-200">
+                    <div class="relative w-full max-w-lg aspect-square mx-auto">
+                        <!-- Main Image -->
+                        <div class="absolute inset-0 bg-secondary blob-shape overflow-hidden border-8 border-white shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover object-center" onerror="this.src='https://placehold.co/800x800/0d9488/ffffff?text=Dokter+Gigi'">
+                        </div>
+                        
+                        <!-- Floating Badge 1 -->
+                        <div class="absolute top-10 -left-8 glass px-6 py-4 rounded-2xl shadow-xl flex items-center gap-4 animate-bounce" style="animation-duration: 3s;">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-500 text-xl">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-dark">Aman & Higienis</h4>
+                                <p class="text-xs text-gray-500">Standar Medis Ketat</p>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badge 2 -->
+                        <div class="absolute bottom-10 -right-8 glass px-6 py-4 rounded-2xl shadow-xl flex items-center gap-4 animate-bounce" style="animation-duration: 4s; animation-delay: 1s;">
+                            <div class="flex -space-x-3">
+                                <img class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" alt="User">
+                                <img class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop" alt="User">
+                                <div class="w-10 h-10 rounded-full border-2 border-white bg-primary flex items-center justify-center text-white text-xs font-bold">+5k</div>
+                            </div>
+                            <div>
+                                <div class="flex text-yellow-400 text-sm">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                </div>
+                                <p class="text-xs font-semibold text-dark mt-1">Review Terbaik</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="layanan" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                <h2 class="text-primary font-bold tracking-wider uppercase text-sm mb-2">Layanan Kami</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-dark mb-4">Perawatan Gigi Komprehensif</h3>
+                <p class="text-gray-600">Kami menawarkan berbagai layanan perawatan gigi untuk segala usia dengan peralatan modern dan minim rasa sakit.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-slate-50 rounded-3xl p-8 hover:bg-primary group transition-all duration-300 transform hover:-translate-y-2 reveal">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-primary text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-tooth"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-dark mb-3 group-hover:text-white transition-colors">Pembersihan Karang</h4>
+                    <p class="text-gray-600 text-sm group-hover:text-teal-50 transition-colors">Scaling gigi secara menyeluruh untuk mencegah radang gusi dan bau mulut.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-slate-50 rounded-3xl p-8 hover:bg-primary group transition-all duration-300 transform hover:-translate-y-2 reveal delay-100">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-primary text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-dark mb-3 group-hover:text-white transition-colors">Pemutihan Gigi</h4>
+                    <p class="text-gray-600 text-sm group-hover:text-teal-50 transition-colors">Bleaching gigi aman untuk senyum yang lebih putih dan cemerlang dalam 1 jam.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-slate-50 rounded-3xl p-8 hover:bg-primary group transition-all duration-300 transform hover:-translate-y-2 reveal delay-200">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-primary text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-face-smile"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-dark mb-3 group-hover:text-white transition-colors">Kawat Gigi (Behel)</h4>
+                    <p class="text-gray-600 text-sm group-hover:text-teal-50 transition-colors">Perawatan ortodontik untuk merapikan susunan gigi yang berantakan.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-slate-50 rounded-3xl p-8 hover:bg-primary group transition-all duration-300 transform hover:-translate-y-2 reveal delay-300">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-primary text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-syringe"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-dark mb-3 group-hover:text-white transition-colors">Cabut Gigi & Bedah</h4>
+                    <p class="text-gray-600 text-sm group-hover:text-teal-50 transition-colors">Pencabutan gigi bungsu dan bedah mulut dengan anestesi lokal tanpa rasa sakit.</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center reveal">
+                <a href="#kontak" class="inline-flex items-center gap-2 text-primary font-semibold hover:text-primaryHover">
+                    Lihat Seluruh Layanan <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us / Tentang -->
+    <section id="tentang" class="py-20 bg-slate-50 overflow-hidden relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                
+                <!-- Images -->
+                <div class="relative reveal">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="" class="rounded-3xl object-cover h-64 w-full shadow-lg" onerror="this.src='https://placehold.co/500x500/0d9488/ffffff?text=Klinik'">
+                        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="" class="rounded-3xl object-cover h-64 w-full shadow-lg translate-y-8" onerror="this.src='https://placehold.co/500x500/0f766e/ffffff?text=Peralatan'">
+                    </div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-2xl z-10">
+                        <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center text-white text-3xl">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="reveal delay-200">
+                    <h2 class="text-primary font-bold tracking-wider uppercase text-sm mb-2">Mengapa Memilih Dentia?</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-dark mb-6">Fasilitas Modern & Perawatan Penuh Kasih</h3>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        Kami mengerti bahwa pergi ke dokter gigi bisa menjadi hal yang menakutkan bagi sebagian orang. Oleh karena itu, Dentia mendesain klinik dengan suasana yang *homey*, ramah, dan dilengkapi alat sterilisasi tingkat tinggi untuk menjamin keamanan Anda.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center text-primary text-xl flex-shrink-0">
+                                <i class="fa-solid fa-user-doctor"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-lg font-bold text-dark">Tim Dokter Ahli</h5>
+                                <p class="text-sm text-gray-600">Lulusan universitas terkemuka dengan spesialisasi di berbagai bidang kedokteran gigi.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center text-primary text-xl flex-shrink-0">
+                                <i class="fa-solid fa-microscope"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-lg font-bold text-dark">Teknologi Terkini</h5>
+                                <p class="text-sm text-gray-600">Menggunakan peralatan dental modern seperti X-Ray Digital dan kamera intra-oral.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center text-primary text-xl flex-shrink-0">
+                                <i class="fa-solid fa-couch"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-lg font-bold text-dark">Lingkungan Nyaman</h5>
+                                <p class="text-sm text-gray-600">Ruang tunggu yang estetik dilengkapi dengan musik relaksasi dan aromaterapi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section id="testimoni" class="py-20 bg-primary relative">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-40 h-40 bg-white opacity-5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Apa Kata Pasien Kami?</h3>
+                <p class="text-teal-100">Ribuan senyum telah kami kembalikan. Jangan hanya percaya kata kami, dengarkan cerita mereka.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testi 1 -->
+                <div class="bg-white rounded-3xl p-8 relative reveal shadow-2xl shadow-teal-900/50 mt-8">
+                    <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full border-4 border-white overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop" alt="" class="w-full h-full object-cover">
+                    </div>
+                    <div class="text-yellow-400 text-center mt-6 mb-4 text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-center italic mb-6 text-sm">"Dokternya sangat sabar dan teliti. Anak saya yang biasanya takut ke dokter gigi, sekarang malah senang kalau diajak ke Dentia."</p>
+                    <div class="text-center">
+                        <h5 class="font-bold text-dark">Siti Aminah</h5>
+                        <p class="text-xs text-gray-500">Ibu Rumah Tangga</p>
+                    </div>
+                </div>
+
+                <!-- Testi 2 -->
+                <div class="bg-white rounded-3xl p-8 relative reveal delay-100 shadow-2xl shadow-teal-900/50 transform md:-translate-y-4 mt-8 md:mt-0">
+                    <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full border-4 border-white overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop" alt="" class="w-full h-full object-cover">
+                    </div>
+                    <div class="text-yellow-400 text-center mt-6 mb-4 text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-center italic mb-6 text-sm">"Cabut gigi bungsu tanpa rasa sakit! Pelayanannya sangat profesional dan ruang tunggu sangat estetik, seperti di cafe."</p>
+                    <div class="text-center">
+                        <h5 class="font-bold text-dark">Budi Santoso</h5>
+                        <p class="text-xs text-gray-500">Karyawan Swasta</p>
+                    </div>
+                </div>
+
+                <!-- Testi 3 -->
+                <div class="bg-white rounded-3xl p-8 relative reveal delay-200 shadow-2xl shadow-teal-900/50 mt-8">
+                    <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full border-4 border-white overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop" alt="" class="w-full h-full object-cover">
+                    </div>
+                    <div class="text-yellow-400 text-center mt-6 mb-4 text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-center italic mb-6 text-sm">"Hasil bleaching giginya luar biasa. Saya jadi lebih percaya diri saat presentasi di depan klien. Harga sebanding dengan kualitas."</p>
+                    <div class="text-center">
+                        <h5 class="font-bold text-dark">Nadia Puti</h5>
+                        <p class="text-xs text-gray-500">Public Relations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Maps Section -->
+    <section id="kontak" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-slate-50 rounded-[3rem] p-8 lg:p-12 shadow-sm border border-gray-100 reveal">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    
+                    <!-- Contact Info -->
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-dark mb-6">Mulai Perjalanan Senyum Indah Anda</h2>
+                        <p class="text-gray-600 mb-8">Hubungi kami hari ini untuk menjadwalkan konsultasi. Tim kami siap menjawab semua pertanyaan Anda.</p>
+                        
+                        <div class="space-y-6 mb-10">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shadow-sm">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-dark">Alamat Klinik</h5>
+                                    <p class="text-sm text-gray-600">Jl. Senyum Sehat No. 88, Kebayoran Baru, Jakarta Selatan</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shadow-sm">
+                                    <i class="fa-solid fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-dark">Jam Operasional</h5>
+                                    <p class="text-sm text-gray-600">Senin - Sabtu: 09.00 - 21.00 WIB<br>Minggu: 10.00 - 16.00 WIB</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shadow-sm">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-dark">WhatsApp</h5>
+                                    <p class="text-sm text-gray-600">+62 812 3456 7890</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CTA Button -->
+                        <a href="https://wa.me/6281234567890?text=Halo%20Klinik%20Dentia,%20saya%20ingin%20membuat%20janji%20temu." target="_blank" class="inline-flex items-center justify-center gap-2 bg-green-500 text-white px-8 py-4 rounded-full hover:bg-green-600 font-semibold transition-all shadow-lg shadow-green-500/30 w-full sm:w-auto">
+                            <i class="fa-brands fa-whatsapp text-xl"></i> Chat via WhatsApp
+                        </a>
+                    </div>
+
+                    <!-- Maps / Aesthetic Visual Placeholder -->
+                    <div class="h-full min-h-[300px] w-full bg-gray-200 rounded-3xl overflow-hidden relative shadow-inner">
+                        <!-- Embed Google Maps -->
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.286884144419!2d106.80430631476918!3d-6.225851495493213!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f14f553a1ecf%3A0x6a0c5c4f2bb75079!2sKebayoran%20Baru%2C%20South%20Jakarta%20City%2C%20Jakarta!5e0!3m2!1sen!2sid!4v1680000000000!5m2!1sen!2sid" width="100%" height="100%" style="border:0; position: absolute; inset: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-gray-300 pt-16 pb-8 border-t-4 border-primary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white text-xl">
+                            <i class="fa-solid fa-tooth"></i>
+                        </div>
+                        <span class="font-bold text-2xl text-white tracking-tight">Dentia<span class="text-primary">.</span></span>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-6">
+                        Klinik gigi modern dengan pelayanan prima dan fasilitas estetik untuk kenyamanan perawatan gigi Anda sekeluarga.
+                    </p>
+                    
+                    <!-- Social Media Section -->
+                    <h5 class="text-white font-semibold mb-3">Ikuti Kami</h5>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-lg">Tautan Cepat</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#beranda" class="hover:text-primary transition-colors">Beranda</a></li>
+                        <li><a href="#layanan" class="hover:text-primary transition-colors">Layanan Kami</a></li>
+                        <li><a href="#tentang" class="hover:text-primary transition-colors">Tentang Klinik</a></li>
+                        <li><a href="#testimoni" class="hover:text-primary transition-colors">Testimoni Pasien</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Artikel & Edukasi</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services List -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-lg">Layanan Unggulan</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-primary transition-colors">Pemutihan Gigi (Bleaching)</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Pemasangan Kawat Gigi</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Implan Gigi</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Perawatan Saluran Akar</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Gigi Tiruan (Crown & Bridge)</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter/Promo -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-lg">Promo & Info Terbaru</h4>
+                    <p class="text-sm text-gray-400 mb-4">Dapatkan info diskon perawatan langsung ke WhatsApp Anda.</p>
+                    <form class="flex flex-col gap-2" onsubmit="event.preventDefault(); alert('Terima kasih! Nomor Anda telah didaftarkan untuk info promo.');">
+                        <input type="text" placeholder="Nomor WhatsApp" class="px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:outline-none focus:border-primary w-full text-sm">
+                        <button type="submit" class="bg-primary hover:bg-primaryHover text-white px-4 py-3 rounded-xl font-medium transition-colors w-full text-sm">
+                            Daftar Promo
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2023 Klinik Gigi Dentia. Hak Cipta Dilindungi.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white">Syarat & Ketentuan</a>
+                    <a href="#" class="hover:text-white">Kebijakan Privasi</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/6281234567890?text=Halo%20Klinik%20Dentia,%20saya%20ingin%20konsultasi%20mengenai%20perawatan%20gigi." 
+       target="_blank" 
+       class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-lg shadow-green-500/40 hover:bg-green-600 hover:scale-110 transition-all z-50 group cursor-pointer animate-bounce">
+        <i class="fa-brands fa-whatsapp"></i>
+        <!-- Tooltip -->
+        <span class="absolute right-16 bg-white text-dark text-sm font-semibold px-4 py-2 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-gray-100">
+            Tanya Dokter? Chat disini!
+        </span>
+    </a>
+
+    <!-- Scripts -->
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+                navbar.classList.replace('bg-white/90', 'bg-white/95');
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.classList.replace('bg-white/95', 'bg-white/90');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on click link
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Reveal Animations on Scroll (Intersection Observer)
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+    </script>
+</body>
+          </html>
