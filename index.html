@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexaTopUp - Top Up Game Termurah</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0f0d;--bg2:#111a14;--bg3:#162019;--bg4:#1e2e23;
+  --accent:#22c55e;--accent2:#4ade80;--accent3:#86efac;
+  --accentd:#15803d;--accentglow:rgba(34,197,94,0.18);
+  --gold:#fbbf24;--red:#f87171;--blue:#60a5fa;
+  --text:#f0faf3;--text2:#86a990;--text3:#3d5c44;
+  --border:rgba(34,197,94,0.12);--border2:rgba(34,197,94,0.25);
+  --radius:12px;--radius-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit}
+input,select,textarea{font-family:inherit}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--accentd);border-radius:4px}
+
+/* NAVBAR */
+.navbar{position:sticky;top:0;z-index:100;background:rgba(10,15,13,0.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:19px;font-weight:800;color:var(--accent);letter-spacing:-0.5px}
+.logo em{color:var(--text);font-style:normal;font-weight:400}
+.nav-links{display:flex;gap:2px}
+.nav-link{padding:6px 14px;border-radius:var(--radius-sm);font-size:13px;color:var(--text2);transition:all .2s;cursor:pointer}
+.nav-link:hover{color:var(--text);background:var(--bg3)}
+.nav-actions{display:flex;gap:8px}
+.btn-out{padding:7px 15px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;border:1px solid var(--border2);background:transparent;color:var(--text2);transition:all .2s}
+.btn-out:hover{border-color:var(--accent);color:var(--accent)}
+.btn-fill{padding:7px 15px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;border:none;background:var(--accent);color:#0a0f0d;transition:all .2s}
+.btn-fill:hover{background:var(--accent2)}
+
+/* PAGE SYSTEM */
+.page{display:none}.page.active{display:block}
+
+/* HERO STRIP */
+.hero-strip{background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(74,222,128,0.04));border-bottom:1px solid var(--border);padding:12px 24px;text-align:center;font-size:13px;color:var(--text2)}
+.hero-strip strong{color:var(--accent)}
+
+/* CONTAINER */
+.container{max-width:1100px;margin:0 auto;padding:28px 24px}
+
+/* FLASH DEAL */
+.flash-bar{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);padding:14px 20px;display:flex;align-items:center;gap:16px;margin-bottom:28px;position:relative;overflow:hidden}
+.flash-bar::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3))}
+.flash-tag{background:var(--accent);color:#0a0f0d;font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;white-space:nowrap;letter-spacing:.8px}
+.flash-text{flex:1;font-size:13px;color:var(--text2)}.flash-text strong{color:var(--text)}
+.timer-wrap{display:flex;gap:5px;align-items:center}
+.tbox{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:5px 9px;font-size:16px;font-weight:700;color:var(--accent);min-width:36px;text-align:center;font-variant-numeric:tabular-nums}
+.tsep{color:var(--text3);font-weight:700}
+.flash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-bottom:28px}
+.fcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;display:flex;gap:12px;align-items:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.fcard:hover{border-color:var(--border2);transform:translateY(-2px)}
+.fcard::before{content:'⚡ FLASH';position:absolute;top:8px;right:0;background:var(--accent);color:#0a0f0d;font-size:9px;font-weight:800;padding:3px 8px;border-radius:4px 0 0 4px;letter-spacing:.5px}
+.fcard-img{width:48px;height:48px;border-radius:10px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;overflow:hidden}
+.fcard-img img{width:100%;height:100%;object-fit:cover}
+.fcard .fn{font-size:11px;color:var(--text2);margin-bottom:2px}
+.fcard .fp{font-size:13px;font-weight:600;margin-bottom:4px}
+.fcard .fprice{display:flex;align-items:center;gap:6px}
+.fcard .fo{font-size:11px;color:var(--text3);text-decoration:line-through}
+.fcard .fn2{font-size:14px;font-weight:700;color:var(--accent)}
+.fcard .fd{font-size:10px;font-weight:700;color:var(--red);background:rgba(248,113,113,0.12);padding:2px 6px;border-radius:4px}
+
+/* SECTION TITLE */
+.stitle{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;color:var(--text)}
+.stitle::before{content:'';width:3px;height:16px;background:var(--accent);border-radius:2px}
+
+/* GAME GRID */
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
+.gcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .2s}
+.gcard:hover{border-color:var(--border2);transform:translateY(-3px)}
+.gcard:hover .gcov{opacity:1}
+.gcard-img{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:40px;position:relative;overflow:hidden}
+.gcard-img img{width:100%;height:100%;object-fit:cover}
+.gcov{position:absolute;inset:0;background:rgba(10,15,13,0.75);display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s;font-size:12px;font-weight:700;color:var(--accent);gap:4px}
+.gbadge{position:absolute;top:7px;left:7px;background:var(--accent);color:#0a0f0d;font-size:9px;font-weight:800;padding:3px 7px;border-radius:20px}
+.gcard-body{padding:10px 12px}
+.gcard-name{font-size:13px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gcard-sub{font-size:11px;color:var(--text2)}
+
+/* DIVIDER */
+.div{height:1px;background:var(--border);margin:28px 0}
+
+/* PRODUCT PAGE */
+.prod-wrap{max-width:860px;margin:0 auto;padding:24px}
+.prod-head{display:flex;gap:18px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:18px}
+.prod-img{width:80px;height:80px;border-radius:14px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0;overflow:hidden}
+.prod-img img{width:100%;height:100%;object-fit:cover}
+.pmeta h1{font-size:20px;font-weight:700;margin-bottom:6px}
+.pmeta p{font-size:13px;color:var(--text2);line-height:1.6}
+.pbadges{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pbadge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500}
+.pb-g{background:rgba(34,197,94,0.12);color:var(--accent);border:1px solid rgba(34,197,94,0.25)}
+.pb-b{background:rgba(96,165,250,0.12);color:var(--blue);border:1px solid rgba(96,165,250,0.25)}
+.pb-y{background:rgba(251,191,36,0.12);color:var(--gold);border:1px solid rgba(251,191,36,0.25)}
+
+.fsec{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px}
+.flabel{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.fnum{background:var(--accent);color:#0a0f0d;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.finput{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text);font-size:14px;outline:none;transition:border-color .2s}
+.finput:focus{border-color:var(--accent)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* NOMINAL GRID */
+.nomgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:9px;margin-top:12px}
+.nomcard{background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;cursor:pointer;transition:all .2s;position:relative}
+.nomcard:hover{border-color:var(--border2)}
+.nomcard.sel{border-color:var(--accent);background:rgba(34,197,94,0.08)}
+.nomcard .na{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px}
+.nomcard .nb{font-size:11px;color:var(--accent2);margin-bottom:5px;min-height:15px}
+.nomcard .no{font-size:11px;color:var(--text3);text-decoration:line-through}
+.nomcard .np{font-size:13px;font-weight:700;color:var(--accent)}
+.nomcard .nd{position:absolute;top:7px;right:7px;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:2px 5px;border-radius:4px}
+
+/* PAYMENT METHOD CARDS */
+.paygrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:8px;margin-top:10px}
+.paycard{background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px 10px;cursor:pointer;transition:all .2s;text-align:center}
+.paycard:hover{border-color:var(--border2)}
+.paycard.sel{border-color:var(--accent);background:rgba(34,197,94,0.08)}
+.paycard .pico{font-size:24px;margin-bottom:5px}
+.paycard .pname{font-size:11px;font-weight:600;color:var(--text2)}
+.paycard .pnum{font-size:10px;color:var(--text3);margin-top:2px}
+
+/* PAYMENT INFO BOX */
+.pay-info-box{background:rgba(34,197,94,0.06);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:14px 16px;margin-top:12px;display:none}
+.pay-info-box.show{display:block}
+.pay-info-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:13px}
+.pay-info-row:last-child{margin-bottom:0}
+.pay-info-label{color:var(--text2)}
+.pay-info-val{font-weight:700;color:var(--text)}
+.pay-info-num{font-size:16px;font-weight:800;color:var(--accent);letter-spacing:.5px}
+.copy-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--accent2);font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;cursor:pointer;transition:all .2s}
+.copy-btn:hover{background:var(--accentglow)}
+
+/* UPLOAD BUKTI */
+.upload-area{border:2px dashed var(--border2);border-radius:var(--radius-sm);padding:28px;text-align:center;cursor:pointer;transition:all .2s;margin-top:10px}
+.upload-area:hover{border-color:var(--accent);background:var(--accentglow)}
+.upload-area.has-file{border-color:var(--accent);background:rgba(34,197,94,0.06)}
+.upload-icon{font-size:32px;margin-bottom:8px}
+.upload-text{font-size:13px;color:var(--text2)}
+.upload-text strong{color:var(--accent)}
+.upload-preview{max-width:200px;border-radius:8px;margin:10px auto 0;display:none}
+
+/* ORDER SUMMARY */
+.osum{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px}
+.orow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:14px;border-bottom:1px solid rgba(34,197,94,0.07)}
+.orow:last-child{border-bottom:none;padding-top:10px;margin-top:4px}
+.orow.total{font-weight:700;font-size:15px}
+.orow.total span:last-child{color:var(--accent)}
+.btn-bayar{width:100%;padding:14px;background:var(--accent);border:none;border-radius:var(--radius-sm);color:#0a0f0d;font-size:15px;font-weight:800;transition:all .2s}
+.btn-bayar:hover{background:var(--accent2);transform:translateY(-1px)}
+.btn-bayar:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+/* SUCCESS PAGE */
+.suc-wrap{max-width:480px;margin:60px auto;padding:24px;text-align:center}
+.suc-icon{width:76px;height:76px;background:rgba(34,197,94,0.1);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 18px}
+.suc-wrap h2{font-size:22px;font-weight:700;margin-bottom:8px}
+.suc-wrap p{font-size:13px;color:var(--text2);margin-bottom:22px}
+.trx-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:left;margin-bottom:18px}
+.trx-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid rgba(34,197,94,0.07)}
+.trx-row:last-child{border-bottom:none}
+.trx-row span:first-child{color:var(--text2)}
+.trx-row span:last-child{font-weight:600}
+
+/* CEK PESANAN */
+.cek-wrap{max-width:500px;margin:60px auto;padding:24px}
+
+/* ADMIN LOGIN */
+.admin-login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:20px}
+.admin-login-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:36px 32px;width:100%;max-width:380px}
+.admin-login-box .logo{display:block;font-size:22px;font-weight:800;color:var(--accent);margin-bottom:4px}
+.admin-login-box .logo em{color:var(--text);font-style:normal;font-weight:400}
+.admin-login-box p{font-size:13px;color:var(--text2);margin-bottom:28px}
+.al-field{margin-bottom:14px}
+.al-field label{font-size:12px;font-weight:600;color:var(--text2);display:block;margin-bottom:6px}
+.al-field input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text);font-size:14px;outline:none;transition:border-color .2s}
+.al-field input:focus{border-color:var(--accent)}
+.btn-login-admin{width:100%;padding:12px;background:var(--accent);border:none;border-radius:var(--radius-sm);color:#0a0f0d;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;margin-top:6px}
+.btn-login-admin:hover{background:var(--accent2)}
+.login-hint{font-size:11px;color:var(--text3);text-align:center;margin-top:14px}
+
+/* ADMIN LAYOUT */
+.admin-layout{display:flex;min-height:calc(100vh - 58px)}
+.sidebar{width:210px;background:var(--bg2);border-right:1px solid var(--border);padding:16px 10px;flex-shrink:0}
+.sb-sec{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);padding:0 10px;margin:16px 0 6px}
+.sb-sec:first-child{margin-top:0}
+.sblink{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .2s}
+.sblink:hover{background:var(--bg3);color:var(--text)}
+.sblink.active{background:rgba(34,197,94,0.12);color:var(--accent);font-weight:600}
+.sblink .sbi{font-size:16px}
+.admin-main{flex:1;padding:24px;overflow-y:auto;min-height:0}
+.asec{display:none}.asec.active{display:block}
+.atitle{font-size:19px;font-weight:700;margin-bottom:20px}
+.acard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.acard-title{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:16px}
+
+/* STATS */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:22px}
+.scard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.scard-label{font-size:12px;color:var(--text2);margin-bottom:6px}
+.scard-val{font-size:26px;font-weight:700;margin-bottom:3px}
+.scard-chg{font-size:12px;color:var(--accent)}
+.scard-chg.dn{color:var(--red)}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:9px 13px;color:var(--text2);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+td{padding:11px 13px;border-bottom:1px solid rgba(34,197,94,0.05);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(34,197,94,0.03)}
+.sbadge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.sb-ok{background:rgba(34,197,94,0.12);color:var(--accent)}
+.sb-pend{background:rgba(251,191,36,0.12);color:var(--gold)}
+.sb-fail{background:rgba(248,113,113,0.12);color:var(--red)}
+
+/* CHART BARS */
+.cbar-wrap{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.cbar-row{display:flex;align-items:center;gap:10px;font-size:12px}
+.cbar-lbl{width:75px;color:var(--text2);text-align:right;flex-shrink:0}
+.cbar-track{flex:1;height:22px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.cbar-fill{height:100%;background:linear-gradient(90deg,var(--accentd),var(--accent));border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:700;color:#0a0f0d;transition:width .9s ease}
+
+/* ADMIN FORM */
+.af label{font-size:12px;color:var(--text2);font-weight:600;margin-bottom:5px;display:block}
+.af input,.af select,.af textarea{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:var(--radius-sm);width:100%;font-size:13px;outline:none;transition:border-color .2s}
+.af input:focus,.af select:focus,.af textarea:focus{border-color:var(--accent)}
+.af .field{margin-bottom:13px}
+.btn-prim{background:var(--accent);color:#0a0f0d;border:none;padding:9px 18px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-prim:hover{background:var(--accent2)}
+.btn-del{background:rgba(248,113,113,0.1);color:var(--red);border:1px solid rgba(248,113,113,0.25);padding:6px 12px;border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer}
+.btn-sec{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:9px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer}
+
+/* PHOTO UPLOAD in ADMIN */
+.photo-upload-area{border:2px dashed var(--border2);border-radius:var(--radius-sm);padding:24px;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+.photo-upload-area:hover{border-color:var(--accent);background:var(--accentglow)}
+.photo-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.photo-preview-wrap{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.photo-thumb{width:70px;height:70px;border-radius:8px;object-fit:cover;border:1px solid var(--border2)}
+
+/* PAYMENT ACCOUNTS */
+.payacc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:12px}
+.payacc-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;position:relative}
+.payacc-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.payacc-ico{font-size:22px}
+.payacc-name{font-size:13px;font-weight:700;color:var(--text)}
+.payacc-num{font-size:15px;font-weight:800;color:var(--accent);letter-spacing:.5px;margin-bottom:3px}
+.payacc-atas{font-size:12px;color:var(--text2)}
+.payacc-del{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;transition:color .2s}
+.payacc-del:hover{color:var(--red)}
+
+/* BUKTI BAYAR REVIEW */
+.bukti-thumb{width:120px;height:80px;object-fit:cover;border-radius:6px;border:1px solid var(--border);cursor:pointer}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal-img{max-width:90vw;max-height:85vh;border-radius:10px;border:1px solid var(--border2)}
+.modal-close{position:absolute;top:20px;right:20px;background:var(--bg2);border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.modal-close:hover{border-color:var(--accent);color:var(--accent)}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 16px;font-size:13px;font-weight:500;z-index:300;transform:translateY(60px);opacity:0;transition:all .3s;max-width:280px;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.ok{border-left:3px solid var(--accent);color:var(--accent)}
+.toast.er{border-left:3px solid var(--red);color:var(--red)}
+
+/* FOOTER */
+.footer{background:var(--bg2);border-top:1px solid var(--border);padding:30px 24px;margin-top:48px}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px}
+.fb-brand .logo{font-size:18px;display:block;margin-bottom:10px}
+.fb-brand p{font-size:13px;color:var(--text2);line-height:1.7}
+.fc h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:10px}
+.fc a{display:block;font-size:13px;color:var(--text2);margin-bottom:7px;transition:color .2s}
+.fc a:hover{color:var(--accent)}
+.fbottom{max-width:1100px;margin:20px auto 0;padding-top:14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:12px;color:var(--text3)}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">Nexa<em>TopUp</em></div>
+  <div class="nav-links">
+    <span class="nav-link" onclick="showPage('home')">Home</span>
+    <span class="nav-link" onclick="showPage('cek-pesanan')">Cek Pesanan</span>
+    <span class="nav-link" onclick="goAdmin()">Admin</span>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-out" onclick="showToast('Fitur segera hadir!','ok')">Masuk</button>
+    <button class="btn-fill" onclick="showToast('Fitur segera hadir!','ok')">Daftar</button>
+  </div>
+</nav>
+
+<!-- ============================================================ HOME ============================================================ -->
+<div id="page-home" class="page active">
+  <div class="hero-strip">💚 Proses otomatis 24 jam · <strong>10.000+</strong> transaksi sukses · Harga terjamin termurah</div>
+  <div class="container">
+
+    <!-- Flash Deal -->
+    <div class="flash-bar">
+      <span class="flash-tag">⚡ FLASH</span>
+      <div class="flash-text"><strong>Flash Deal Hari Ini!</strong> Diskon s/d 16% — stok terbatas, buruan!</div>
+      <div class="timer-wrap">
+        <div class="tbox" id="th">02</div><span class="tsep">:</span>
+        <div class="tbox" id="tm">47</div><span class="tsep">:</span>
+        <div class="tbox" id="ts">30</div>
+      </div>
+    </div>
+    <div class="flash-grid" id="flash-grid"></div>
+
+    <div class="div"></div>
+    <div class="stitle">Games Populer</div>
+    <div class="ggrid" id="ggrid-pop"></div>
+    <div class="div"></div>
+    <div class="stitle">Semua Layanan</div>
+    <div class="ggrid" id="ggrid-all"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="fb-brand"><span class="logo">Nexa<em>TopUp</em></span><p>Top up game paling murah, cepat, dan aman. Proses otomatis 24 jam nonstop.</p></div>
+      <div class="fc"><h4>Layanan</h4><a>Mobile Legends</a><a>Free Fire</a><a>PUBG Mobile</a><a>Genshin Impact</a></div>
+      <div class="fc"><h4>Bantuan</h4><a>Cara Order</a><a onclick="showPage('cek-pesanan')">Cek Pesanan</a><a>FAQ</a><a>Kontak CS</a></div>
+      <div class="fc"><h4>Tentang</h4><a>Tentang Kami</a><a>Kebijakan Privasi</a><a>Syarat & Ketentuan</a></div>
+    </div>
+    <div class="fbottom"><span>© 2025 NexaTopUp. All rights reserved.</span><span>Aman · Otomatis · Terpercaya</span></div>
+  </footer>
+</div>
+
+<!-- ============================================================ PRODUCT ============================================================ -->
+<div id="page-product" class="page">
+  <div class="prod-wrap">
+    <div class="prod-head">
+      <div class="prod-img" id="prod-img-el">🎮</div>
+      <div class="pmeta">
+        <h1 id="prod-title">Game</h1>
+        <p id="prod-desc">Top up game murah otomatis 24 jam.</p>
+        <div class="pbadges">
+          <span class="pbadge pb-g">✓ Proses Otomatis</span>
+          <span class="pbadge pb-b">⚡ Harga Terbaik</span>
+          <span class="pbadge pb-y">⭐ Terpercaya</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="fsec">
+      <div class="flabel"><span class="fnum">1</span> Masukkan Data Akun</div>
+      <div class="frow">
+        <input class="finput" id="uid" placeholder="User ID / Kode Akun">
+        <input class="finput" id="sid" placeholder="Server ID (opsional)">
+      </div>
+      <p style="font-size:11px;color:var(--text3);margin-top:8px">Pastikan ID benar. Kesalahan ID menjadi tanggung jawab pembeli.</p>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="fsec">
+      <div class="flabel"><span class="fnum">2</span> Pilih Nominal</div>
+      <div class="nomgrid" id="nomgrid"></div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="fsec">
+      <div class="flabel"><span class="fnum">3</span> Pilih Metode Pembayaran</div>
+      <div class="paygrid" id="paygrid"></div>
+      <!-- Info rekening -->
+      <div class="pay-info-box" id="pay-info-box">
+        <div class="pay-info-row"><span class="pay-info-label">Transfer ke</span><span class="pay-info-val" id="pi-name">-</span></div>
+        <div class="pay-info-row">
+          <span class="pay-info-num" id="pi-num">-</span>
+          <button class="copy-btn" onclick="copyNum()">Salin</button>
+        </div>
+        <div class="pay-info-row"><span class="pay-info-label">Atas nama</span><span class="pay-info-val" id="pi-owner">-</span></div>
+        <div style="font-size:11px;color:var(--text3);margin-top:8px">⚠️ Transfer <strong>sesuai nominal</strong> tertera, lalu upload bukti bayar di bawah.</div>
+      </div>
+    </div>
+
+    <!-- Step 4 Upload Bukti -->
+    <div class="fsec">
+      <div class="flabel"><span class="fnum">4</span> Upload Bukti Pembayaran</div>
+      <div class="upload-area" id="upload-area" onclick="document.getElementById('bukti-input').click()">
+        <input type="file" id="bukti-input" accept="image/*" style="display:none" onchange="handleBukti(this)">
+        <div class="upload-icon">📎</div>
+        <div class="upload-text"><strong>Klik untuk upload</strong> atau drag & drop<br><span style="font-size:11px;color:var(--text3)">PNG, JPG, JPEG · Maks 5MB</span></div>
+        <img id="bukti-preview" class="upload-preview" alt="bukti bayar">
+      </div>
+    </div>
+
+    <!-- Step 5 Email -->
+    <div class="fsec">
+      <div class="flabel"><span class="fnum">5</span> Email (untuk invoice)</div>
+      <input class="finput" id="email-inp" type="email" placeholder="emailkamu@gmail.com">
+    </div>
+
+    <!-- Summary -->
+    <div class="osum">
+      <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--text2)">Ringkasan Pesanan</div>
+      <div class="orow"><span>Produk</span><span id="sum-p" style="color:var(--text2)">Belum dipilih</span></div>
+      <div class="orow"><span>Metode Bayar</span><span id="sum-m" style="color:var(--text2)">Belum dipilih</span></div>
+      <div class="orow"><span>Harga</span><span id="sum-h" style="color:var(--text2)">-</span></div>
+      <div class="orow total"><span>Total Bayar</span><span id="sum-t">Rp 0</span></div>
+    </div>
+    <button class="btn-bayar" id="btn-bayar" onclick="prosesBayar()">Konfirmasi Pembayaran</button>
+    <p style="font-size:11px;color:var(--text3);text-align:center;margin-top:10px">Dengan melakukan pembelian kamu menyetujui syarat & ketentuan NexaTopUp</p>
+  </div>
+</div>
+
+<!-- ============================================================ CEK PESANAN ============================================================ -->
+<div id="page-cek-pesanan" class="page">
+  <div class="cek-wrap">
+    <div class="stitle" style="margin-bottom:20px">Cek Status Pesanan</div>
+    <div class="fsec">
+      <div class="flabel">Nomor Transaksi</div>
+      <input class="finput" id="trx-search" placeholder="Contoh: NTU-20250610-001234" style="margin-bottom:12px">
+      <button class="btn-prim" style="width:100%;padding:11px" onclick="cekPesanan()">Cek Pesanan</button>
+    </div>
+    <div id="cek-result" style="display:none;margin-top:14px">
+      <div class="acard">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><span style="font-size:14px;font-weight:600">Detail Pesanan</span><span class="sbadge sb-ok">Berhasil</span></div>
+        <div class="trx-row"><span>Game</span><span>Mobile Legends</span></div>
+        <div class="trx-row"><span>Produk</span><span>86 Diamonds</span></div>
+        <div class="trx-row"><span>User ID</span><span>123456789</span></div>
+        <div class="trx-row"><span>Total</span><span style="color:var(--accent)">Rp 18.900</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ SUCCESS ============================================================ -->
+<div id="page-success" class="page">
+  <div class="suc-wrap">
+    <div class="suc-icon">✓</div>
+    <h2>Pesanan Diterima!</h2>
+    <p>Pesanan kamu sedang diverifikasi admin. Diamond akan masuk setelah bukti pembayaran dikonfirmasi.</p>
+    <div class="trx-box" id="trx-detail"></div>
+    <button class="btn-fill" style="width:100%;padding:12px;font-size:14px" onclick="showPage('home')">Kembali ke Home</button>
+  </div>
+</div>
+
+<!-- ============================================================ ADMIN LOGIN ============================================================ -->
+<div id="page-admin-login" class="page">
+  <div class="admin-login-wrap">
+    <div class="admin-login-box">
+      <span class="logo">Nexa<em>TopUp</em></span>
+      <p>Masuk ke panel admin</p>
+      <div class="al-field"><label>Username</label><input type="text" id="admin-user" placeholder="admin"></div>
+      <div class="al-field"><label>Password</label><input type="password" id="admin-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="btn-login-admin" onclick="doLogin()">Masuk ke Dashboard</button>
+      <div class="login-hint">Demo: username <strong style="color:var(--accent2)">admin</strong> / password <strong style="color:var(--accent2)">admin123</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ ADMIN DASHBOARD ============================================================ -->
+<div id="page-admin-dashboard" class="page">
+  <div class="admin-layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sb-sec">Dashboard</div>
+      <div class="sblink active" onclick="aNav('overview',this)"><span class="sbi">📊</span> Overview</div>
+      <div class="sblink" onclick="aNav('pesanan',this)"><span class="sbi">📦</span> Pesanan</div>
+      <div class="sblink" onclick="aNav('produk',this)"><span class="sbi">🎮</span> Produk</div>
+      <div class="sb-sec">Keuangan</div>
+      <div class="sblink" onclick="aNav('rekening',this)"><span class="sbi">💳</span> Rekening Tujuan</div>
+      <div class="sb-sec">Akun</div>
+      <div class="sblink" onclick="aNav('setting',this)"><span class="sbi">⚙️</span> Pengaturan</div>
+      <div class="sblink" onclick="adminLogout()"><span class="sbi">🚪</span> Keluar</div>
+    </div>
+
+    <!-- Main -->
+    <div class="admin-main">
+
+      <!-- OVERVIEW -->
+      <div id="admin-overview" class="asec active">
+        <div class="atitle">Dashboard Overview</div>
+        <div class="sgrid">
+          <div class="scard"><div class="scard-label">Pendapatan Hari Ini</div><div class="scard-val" style="color:var(--accent)">Rp 4.2jt</div><div class="scard-chg">↑ +12%</div></div>
+          <div class="scard"><div class="scard-label">Total Transaksi</div><div class="scard-val">247</div><div class="scard-chg">↑ +8 hari ini</div></div>
+          <div class="scard"><div class="scard-label">Sukses Rate</div><div class="scard-val">98.4%</div><div class="scard-chg">↑ +0.2%</div></div>
+          <div class="scard"><div class="scard-label">Menunggu Verifikasi</div><div class="scard-val" style="color:var(--gold)" id="pending-count">3</div><div class="scard-chg" style="color:var(--gold)">Perlu dicek</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:14px">
+          <div class="acard">
+            <div class="acard-title">Penjualan per Game (Minggu Ini)</div>
+            <div class="cbar-wrap">
+              <div class="cbar-row"><span class="cbar-lbl">ML</span><div class="cbar-track"><div class="cbar-fill" style="width:82%">Rp 1.9jt</div></div></div>
+              <div class="cbar-row"><span class="cbar-lbl">Free Fire</span><div class="cbar-track"><div class="cbar-fill" style="width:64%">Rp 1.4jt</div></div></div>
+              <div class="cbar-row"><span class="cbar-lbl">PUBG</span><div class="cbar-track"><div class="cbar-fill" style="width:42%">Rp 980k</div></div></div>
+              <div class="cbar-row"><span class="cbar-lbl">Genshin</span><div class="cbar-track"><div class="cbar-fill" style="width:28%">Rp 620k</div></div></div>
+              <div class="cbar-row"><span class="cbar-lbl">Lainnya</span><div class="cbar-track"><div class="cbar-fill" style="width:16%">Rp 350k</div></div></div>
+            </div>
+          </div>
+          <div class="acard">
+            <div class="acard-title">Pesanan Terbaru</div>
+            <div id="recent-orders-admin" style="display:flex;flex-direction:column;gap:6px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PESANAN -->
+      <div id="admin-pesanan" class="asec">
+        <div class="atitle">Manajemen Pesanan</div>
+        <div style="display:flex;gap:8px;margin-bottom:14px">
+          <input id="cari-pesanan" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:var(--radius-sm);font-size:13px;flex:1;outline:none" placeholder="Cari No. Transaksi / User ID...">
+          <select id="filter-status" onchange="filterPesanan()" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:var(--radius-sm);font-size:13px;outline:none">
+            <option value="">Semua Status</option>
+            <option value="Sukses">Sukses</option>
+            <option value="Menunggu">Menunggu</option>
+            <option value="Gagal">Gagal</option>
+          </select>
+        </div>
+        <div class="acard">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>No. Transaksi</th><th>Game</th><th>Produk</th><th>User ID</th><th>Total</th><th>Metode</th><th>Bukti Bayar</th><th>Status</th><th>Aksi</th></tr></thead>
+              <tbody id="pesanan-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUK -->
+      <div id="admin-produk" class="asec">
+        <div class="atitle">Manajemen Produk</div>
+        <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:14px">
+          <div class="acard">
+            <div class="acard-title">Tambah Produk</div>
+            <div class="af">
+              <div class="field"><label>Nama Game</label><input id="ap-game" type="text" placeholder="Contoh: Mobile Legends"></div>
+              <div class="field"><label>Nama Produk</label><input id="ap-prod" type="text" placeholder="Contoh: 86 Diamonds"></div>
+              <div class="field"><label>Harga Jual (Rp)</label><input id="ap-harga" type="number" placeholder="18900"></div>
+              <div class="field"><label>Diskon (%)</label><input id="ap-disc" type="number" placeholder="14" min="0" max="100"></div>
+              <div class="field">
+                <label>Foto Produk</label>
+                <div class="photo-upload-area" id="photo-upload-area">
+                  <input type="file" accept="image/*" onchange="handleProductPhoto(this)">
+                  <div id="photo-placeholder">
+                    <div style="font-size:28px;margin-bottom:6px">🖼️</div>
+                    <div style="font-size:12px;color:var(--text2)"><strong style="color:var(--accent)">Klik untuk upload</strong> foto produk<br><span style="font-size:11px;color:var(--text3)">PNG, JPG · Maks 2MB</span></div>
+                  </div>
+                  <div class="photo-preview-wrap" id="photo-preview-wrap"></div>
+                </div>
+              </div>
+              <button class="btn-prim" style="width:100%;padding:10px" onclick="tambahProduk()">Simpan Produk</button>
+            </div>
+          </div>
+          <div class="acard">
+            <div class="acard-title">Daftar Produk</div>
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Foto</th><th>Game</th><th>Produk</th><th>Harga</th><th>Diskon</th><th>Aksi</th></tr></thead>
+                <tbody id="produk-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REKENING TUJUAN -->
+      <div id="admin-rekening" class="asec">
+        <div class="atitle">Rekening / Dompet Tujuan Transfer</div>
+        <div style="display:grid;grid-template-columns:1fr 2fr;gap:14px">
+          <div class="acard">
+            <div class="acard-title">Tambah Rekening</div>
+            <div class="af">
+              <div class="field">
+                <label>Jenis</label>
+                <select id="rek-jenis">
+                  <option>DANA</option><option>GoPay</option><option>OVO</option><option>ShopeePay</option><option>LinkAja</option>
+                  <option>BCA</option><option>BRI</option><option>BNI</option><option>Mandiri</option><option>QRIS</option>
+                </select>
+              </div>
+              <div class="field"><label>Nomor / ID</label><input id="rek-num" type="text" placeholder="08xxxxxxxxxx"></div>
+              <div class="field"><label>Atas Nama</label><input id="rek-owner" type="text" placeholder="Nama pemilik rekening"></div>
+              <button class="btn-prim" style="width:100%;padding:10px" onclick="tambahRekening()">Tambah Rekening</button>
+            </div>
+          </div>
+          <div class="acard">
+            <div class="acard-title">Rekening Aktif</div>
+            <div class="payacc-grid" id="payacc-grid"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTING -->
+      <div id="admin-setting" class="asec">
+        <div class="atitle">Pengaturan Akun Admin</div>
+        <div class="acard" style="max-width:420px">
+          <div class="af">
+            <div class="field"><label>Username</label><input type="text" value="admin"></div>
+            <div class="field"><label>Password Baru</label><input type="password" placeholder="Kosongkan jika tidak diubah"></div>
+            <div class="field"><label>Konfirmasi Password</label><input type="password" placeholder="Ulangi password baru"></div>
+            <div class="field"><label>Nama Toko</label><input type="text" value="NexaTopUp"></div>
+            <button class="btn-prim" onclick="showToast('Pengaturan disimpan!','ok')">Simpan Perubahan</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /admin-main -->
+  </div><!-- /admin-layout -->
+</div>
+
+<!-- IMAGE MODAL -->
+<div class="modal-overlay" id="img-modal" onclick="closeModal()">
+  <button class="modal-close" onclick="closeModal()">✕</button>
+  <img class="modal-img" id="modal-img-el" alt="bukti bayar">
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast-el"></div>
+
+<script>
+// ============================================================ DATA STORE ============================================================
+const GAMES = [
+  {id:'ml',icon:'🎮',name:'Mobile Legends',sub:'Diamond & Skin',badge:'-16%',emoji:'🎮'},
+  {id:'ff',icon:'🔥',name:'Free Fire',sub:'Diamond & Bundle',badge:'-16%',emoji:'🔥'},
+  {id:'pubg',icon:'🏆',name:'PUBG Mobile',sub:'UC & Royale Pass',badge:'-12%',emoji:'🏆'},
+  {id:'genshin',icon:'✨',name:'Genshin Impact',sub:'Genesis Crystal',badge:'-13%',emoji:'✨'},
+  {id:'valorant',icon:'⚔️',name:'Valorant',sub:'VP Points',badge:null,emoji:'⚔️'},
+  {id:'honkai',icon:'🌟',name:'Honkai: Star Rail',sub:'Stellar Jade',badge:null,emoji:'🌟'},
+  {id:'roblox',icon:'🟥',name:'Roblox',sub:'Robux',badge:'-10%',emoji:'🟥'},
+  {id:'cod',icon:'💥',name:'Call of Duty',sub:'CP Points',badge:null,emoji:'💥'},
+];
+const ALL_SVC = [
+  {id:'ml',icon:'🎮',name:'Mobile Legends',sub:'ID & Global'},
+  {id:'ff',icon:'🔥',name:'Free Fire',sub:'FF & FF Max'},
+  {id:'pulsa',icon:'📱',name:'Pulsa & Data',sub:'Semua Operator'},
+  {id:'steam',icon:'🎯',name:'Steam Wallet',sub:'Gift Card'},
+  {id:'netflix',icon:'🎬',name:'Netflix',sub:'Voucher'},
+  {id:'spotify',icon:'🎵',name:'Spotify',sub:'Premium'},
+  {id:'youtube',icon:'▶️',name:'YouTube Premium',sub:'Berlangganan'},
+  {id:'token',icon:'⚡',name:'Token Listrik',sub:'PLN Prepaid'},
+];
+const NOMINALS = {
+  ml:[{a:'86',b:'',p:18900,o:22000,d:14},{a:'172',b:'',p:36900,o:42000,d:12},{a:'257',b:'',p:54900,o:62000,d:11},{a:'344',b:'',p:72900,o:83000,d:12},{a:'514',b:'+26',p:108900,o:126000,d:14},{a:'706',b:'+36',p:148900,o:172000,d:13},{a:'878',b:'+44',p:184900,o:214000,d:14},{a:'1412',b:'+72',p:295900,o:342000,d:13}],
+  ff:[{a:'100',b:'',p:14900,o:17000,d:12},{a:'210',b:'',p:30900,o:35000,d:12},{a:'520',b:'+26',p:75900,o:88000,d:14},{a:'1060',b:'+106',p:149900,o:175000,d:14},{a:'2180',b:'+218',p:299900,o:350000,d:14},{a:'5600',b:'+560',p:750900,o:875000,d:14}],
+  pubg:[{a:'60',b:'',p:16900,o:19000,d:11},{a:'180',b:'',p:49900,o:57000,d:12},{a:'325',b:'',p:84900,o:97000,d:12},{a:'385',b:'+25',p:99900,o:115000,d:13},{a:'660',b:'+50',p:170900,o:197000,d:13},{a:'1800',b:'+150',p:459900,o:530000,d:13}],
+};
+const DEF_NOM = [{a:'50',b:'',p:9900,o:12000,d:18},{a:'100',b:'',p:18900,o:22000,d:14},{a:'200',b:'+10',p:36900,o:43000,d:14},{a:'500',b:'+25',p:89900,o:105000,d:14}];
+const UNITS = {ml:'Diamond',ff:'Diamond',pubg:'UC',genshin:'Crystal',valorant:'VP',roblox:'Robux'};
+
+// Payment accounts (mutable)
+let payAccounts = [
+  {id:1,type:'DANA',icon:'💙',num:'081234567890',owner:'NexaTopUp Official'},
+  {id:2,type:'GoPay',icon:'💚',num:'081234567891',owner:'NexaTopUp Official'},
+  {id:3,type:'OVO',icon:'💜',num:'081234567892',owner:'NexaTopUp Official'},
+];
+let accIdCounter = 4;
+
+// Products (mutable)
+let products = [
+  {id:1,game:'Mobile Legends',prod:'86 Diamonds',harga:18900,disc:14,photo:null},
+  {id:2,game:'Free Fire',prod:'100 Diamond',harga:14900,disc:12,photo:null},
+  {id:3,game:'PUBG Mobile',prod:'60 UC',harga:16900,disc:11,photo:null},
+];
+let prodIdCounter = 4;
+let newProductPhoto = null;
+
+// Orders (mutable)
+let orders = [
+  {id:'NTU-001247',game:'Mobile Legends',prod:'86 Diamonds',uid:'123456789',total:18900,method:'DANA',status:'Sukses',time:'10/06 14:32',bukti:null},
+  {id:'NTU-001246',game:'Free Fire',prod:'1000 Diamond',uid:'987654321',total:145000,method:'GoPay',status:'Menunggu',time:'10/06 14:28',bukti:'demo'},
+  {id:'NTU-001245',game:'PUBG Mobile',prod:'385 UC',uid:'112233445',total:99563,method:'OVO',status:'Sukses',time:'10/06 14:10',bukti:null},
+  {id:'NTU-001244',game:'Mobile Legends',prod:'514 Diamonds',uid:'556677889',total:149000,method:'BCA',status:'Gagal',time:'10/06 13:55',bukti:'demo'},
+];
+
+// State
+let curGame = null, selNom = null, selPay = null, buktiFile = null, buktiDataURL = null;
+let adminLoggedIn = false;
+
+// ============================================================ ICONS / EMOJI MAP ============================================================
+const PAY_ICONS = {DANA:'💙',GoPay:'💚',OVO:'💜',ShopeePay:'🟠',LinkAja:'🔴',BCA:'🏦',BRI:'🏦',BNI:'🏦',Mandiri:'🏦',QRIS:'📱'};
+
+// ============================================================ RENDER ============================================================
+function getUnit(id){return UNITS[id]||'Poin'}
+
+function renderGameGrid(cid, list) {
+  const el = document.getElementById(cid);
+  if(!el) return;
+  el.innerHTML = list.map(g=>`
+    <div class="gcard" onclick="openProduct('${g.id}')">
+      <div class="gcard-img">
+        ${g.badge?`<div class="gbadge">${g.badge}</div>`:''}
+        ${g.icon}
+        <div class="gcov">▶ Top Up</div>
+      </div>
+      <div class="gcard-body">
+        <div class="gcard-name">${g.name}</div>
+        <div class="gcard-sub">${g.sub}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderFlashGrid() {
+  const el = document.getElementById('flash-grid');
+  const flashGames = [{id:'ml',icon:'🎮',name:'Mobile Legends',prod:'3247 + 491 Bonus Diamonds',op:1071000,np:923976,d:14},
+    {id:'ff',icon:'🔥',name:'Free Fire',prod:'4720 Diamond',op:693244,np:594367,d:14},
+    {id:'pubg',icon:'🏆',name:'PUBG Mobile',prod:'385 UC (360+25)',op:112743,np:99563,d:12}];
+  el.innerHTML = flashGames.map(g=>`
+    <div class="fcard" onclick="openProduct('${g.id}')">
+      <div class="fcard-img">${g.icon}</div>
+      <div>
+        <div class="fn">${g.name}</div>
+        <div class="fp">${g.prod}</div>
+        <div class="fprice"><span class="fo">Rp ${g.op.toLocaleString('id')}</span><span class="fn2">Rp ${g.np.toLocaleString('id')}</span><span class="fd">-${g.d}%</span></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderPayGrid() {
+  const pg = document.getElementById('paygrid');
+  if(!pg) return;
+  if(payAccounts.length === 0) {
+    pg.innerHTML = '<div style="font-size:13px;color:var(--text3);grid-column:1/-1;padding:12px 0">Belum ada metode pembayaran. Admin belum menambahkan rekening.</div>';
+    return;
+  }
+  pg.innerHTML = payAccounts.map(a=>`
+    <div class="paycard" onclick="selectPay(this,'${a.type}','${a.num}','${a.owner}','${a.icon}')">
+      <div class="pico">${a.icon}</div>
+      <div class="pname">${a.type}</div>
+      <div class="pnum">${a.num.slice(0,4)}****${a.num.slice(-3)}</div>
+    </div>`).join('');
+}
+
+function renderNomGrid(id) {
+  const noms = NOMINALS[id] || DEF_NOM;
+  const unit = getUnit(id);
+  document.getElementById('nomgrid').innerHTML = noms.map(n=>`
+    <div class="nomcard" onclick="selectNom(this,${n.p},'${n.a}${n.b?' + '+n.b+' Bonus':''} ${unit}')">
+      ${n.d?`<div class="nd">-${n.d}%</div>`:''}
+      <div class="na">${n.a} ${unit}</div>
+      <div class="nb">${n.b?'+ '+n.b+' Bonus':''}</div>
+      ${n.o?`<div class="no">Rp ${n.o.toLocaleString('id')}</div>`:''}
+      <div class="np">Rp ${n.p.toLocaleString('id')}</div>
+    </div>`).join('');
+}
+
+// ============================================================ PRODUCT PAGE ============================================================
+function openProduct(id) {
+  curGame = id; selNom = null; selPay = null; buktiFile = null; buktiDataURL = null;
+  const info = [...GAMES,...ALL_SVC].find(g=>g.id===id)||{icon:'🎮',name:'Top Up Game',sub:''};
+  const imgEl = document.getElementById('prod-img-el');
+  imgEl.innerHTML = info.icon;
+  imgEl.style.fontSize = '36px';
+  document.getElementById('prod-title').textContent = info.name;
+  document.getElementById('prod-desc').textContent = `Top up ${info.name} harga termurah. Proses cepat setelah bukti pembayaran dikonfirmasi.`;
+  document.getElementById('uid').value = '';
+  document.getElementById('sid').value = '';
+  document.getElementById('email-inp').value = '';
+  document.getElementById('bukti-input').value = '';
+  document.getElementById('bukti-preview').style.display = 'none';
+  document.getElementById('upload-area').classList.remove('has-file');
+  document.getElementById('pay-info-box').classList.remove('show');
+  renderNomGrid(id);
+  renderPayGrid();
+  updateSum();
+  showPage('product');
+}
+
+function selectNom(el, price, label) {
+  document.querySelectorAll('.nomcard').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  selNom = {price, label};
+  updateSum();
+}
+
+function selectPay(el, name, num, owner, icon) {
+  document.querySelectorAll('.paycard').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  selPay = name;
+  // Show info box
+  const box = document.getElementById('pay-info-box');
+  document.getElementById('pi-name').textContent = icon + ' ' + name;
+  document.getElementById('pi-num').textContent = num;
+  document.getElementById('pi-owner').textContent = owner;
+  box.classList.add('show');
+  updateSum();
+}
+
+function copyNum() {
+  const num = document.getElementById('pi-num').textContent;
+  navigator.clipboard.writeText(num).then(()=>showToast('Nomor disalin: '+num,'ok')).catch(()=>showToast('Nomor: '+num,'ok'));
+}
+
+function updateSum() {
+  document.getElementById('sum-p').textContent = selNom ? selNom.label : 'Belum dipilih';
+  document.getElementById('sum-m').textContent = selPay || 'Belum dipilih';
+  const p = selNom ? selNom.price : 0;
+  document.getElementById('sum-h').textContent = p ? 'Rp ' + p.toLocaleString('id') : '-';
+  document.getElementById('sum-t').textContent = p ? 'Rp ' + p.toLocaleString('id') : 'Rp 0';
+}
+
+function handleBukti(input) {
+  if(!input.files[0]) return;
+  buktiFile = input.files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    buktiDataURL = e.target.result;
+    const prev = document.getElementById('bukti-preview');
+    prev.src = buktiDataURL;
+    prev.style.display = 'block';
+    document.getElementById('upload-area').classList.add('has-file');
+  };
+  reader.readAsDataURL(buktiFile);
+}
+
+function prosesBayar() {
+  const uid = document.getElementById('uid').value.trim();
+  const email = document.getElementById('email-inp').value.trim();
+  if(!uid){showToast('Masukkan User ID dulu','er');return}
+  if(!selNom){showToast('Pilih nominal top up','er');return}
+  if(!selPay){showToast('Pilih metode pembayaran','er');return}
+  if(!buktiDataURL){showToast('Upload bukti pembayaran dulu','er');return}
+  if(!email){showToast('Masukkan email untuk invoice','er');return}
+
+  const btn = document.getElementById('btn-bayar');
+  btn.disabled = true; btn.textContent = 'Memproses...';
+
+  setTimeout(()=>{
+    const game = [...GAMES,...ALL_SVC].find(g=>g.id===curGame)||{name:'Game'};
+    const trxId = 'NTU-'+Date.now().toString().slice(-8);
+    // Add to orders
+    orders.unshift({id:trxId,game:game.name,prod:selNom.label,uid,total:selNom.price,method:selPay,status:'Menunggu',time:new Date().toLocaleDateString('id',{day:'2-digit',month:'2-digit'})+' '+new Date().toLocaleTimeString('id',{hour:'2-digit',minute:'2-digit'}),bukti:buktiDataURL});
+    document.getElementById('trx-detail').innerHTML = `
+      <div class="trx-row"><span>No. Transaksi</span><span>${trxId}</span></div>
+      <div class="trx-row"><span>Game</span><span>${game.name}</span></div>
+      <div class="trx-row"><span>Produk</span><span>${selNom.label}</span></div>
+      <div class="trx-row"><span>User ID</span><span>${uid}</span></div>
+      <div class="trx-row"><span>Metode Bayar</span><span>${selPay}</span></div>
+      <div class="trx-row"><span>Total</span><span style="color:var(--accent)">Rp ${selNom.price.toLocaleString('id')}</span></div>
+      <div class="trx-row"><span>Status</span><span style="color:var(--gold)">Menunggu Verifikasi</span></div>`;
+    btn.disabled = false; btn.textContent = 'Konfirmasi Pembayaran';
+    showPage('success');
+  }, 1800);
+}
+
+// ============================================================ CEK PESANAN ============================================================
+function cekPesanan() {
+  const v = document.getElementById('trx-search').value.trim();
+  if(!v){showToast('Masukkan nomor transaksi','er');return}
+  document.getElementById('cek-result').style.display = 'block';
+  showToast('Data ditemukan','ok');
+}
+
+// ============================================================ ADMIN AUTH ============================================================
+function goAdmin() {
+  if(adminLoggedIn) { showPage('admin-dashboard'); renderAdminData(); }
+  else showPage('admin-login');
+}
+
+function doLogin() {
+  const u = document.getElementById('admin-user').value.trim();
+  const p = document.getElementById('admin-pass').value.trim();
+  if(u==='admin' && p==='admin123') {
+    adminLoggedIn = true;
+    showToast('Login berhasil! Selamat datang.','ok');
+    showPage('admin-dashboard');
+    renderAdminData();
+  } else {
+    showToast('Username atau password salah','er');
+  }
+}
+
+function adminLogout() {
+  adminLoggedIn = false;
+  showPage('admin-login');
+  document.getElementById('admin-user').value = '';
+  document.getElementById('admin-pass').value = '';
+  showToast('Berhasil keluar','ok');
+}
+
+// ============================================================ ADMIN DATA RENDER ============================================================
+function renderAdminData() {
+  renderRecentOrders();
+  renderPesananTable();
+  renderProdukTable();
+  renderPayAccGrid();
+  updatePendingCount();
+}
+
+function updatePendingCount() {
+  const n = orders.filter(o=>o.status==='Menunggu').length;
+  const el = document.getElementById('pending-count');
+  if(el) el.textContent = n;
+}
+
+function renderRecentOrders() {
+  const el = document.getElementById('recent-orders-admin');
+  if(!el) return;
+  el.innerHTML = orders.slice(0,5).map(o=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:6px 0;border-bottom:1px solid rgba(34,197,94,0.06)">
+      <div><div style="font-weight:600">${o.id}</div><div style="color:var(--text2);margin-top:1px">${o.game} · ${o.prod}</div></div>
+      <span class="sbadge ${o.status==='Sukses'?'sb-ok':o.status==='Menunggu'?'sb-pend':'sb-fail'}">${o.status}</span>
+    </div>`).join('');
+}
+
+function renderPesananTable() {
+  const tbody = document.getElementById('pesanan-tbody');
+  if(!tbody) return;
+  tbody.innerHTML = orders.map(o=>`
+    <tr>
+      <td style="font-weight:600;font-size:12px">${o.id}</td>
+      <td>${o.game}</td>
+      <td>${o.prod}</td>
+      <td style="color:var(--text2)">${o.uid}</td>
+      <td style="color:var(--accent);font-weight:700">Rp ${o.total.toLocaleString('id')}</td>
+      <td>${o.method}</td>
+      <td>${o.bukti
+        ? `<img src="${o.bukti==='demo'?'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="80" viewBox="0 0 120 80"><rect width="120" height="80" fill="%23162019"/><text x="60" y="44" text-anchor="middle" fill="%2322c55e" font-size="11" font-family="Inter">Bukti Bayar</text></svg>':o.bukti}" class="bukti-thumb" onclick="viewBukti(this.src)" alt="bukti">`
+        : '<span style="color:var(--text3);font-size:11px">Tidak ada</span>'}</td>
+      <td><span class="sbadge ${o.status==='Sukses'?'sb-ok':o.status==='Menunggu'?'sb-pend':'sb-fail'}">${o.status}</span></td>
+      <td>
+        ${o.status==='Menunggu'?`<div style="display:flex;gap:6px">
+          <button class="btn-prim" style="padding:5px 10px;font-size:11px" onclick="updateOrder('${o.id}','Sukses')">✓ OK</button>
+          <button class="btn-del" onclick="updateOrder('${o.id}','Gagal')">✕</button>
+        </div>`:'<span style="color:var(--text3);font-size:12px">—</span>'}
+      </td>
+    </tr>`).join('');
+}
+
+function updateOrder(id, status) {
+  const o = orders.find(x=>x.id===id);
+  if(o) { o.status = status; renderAdminData(); showToast(`Pesanan ${id} → ${status}`,'ok'); }
+}
+
+function filterPesanan() {
+  const fs = document.getElementById('filter-status').value;
+  const filtered = fs ? orders.filter(o=>o.status===fs) : orders;
+  const tbody = document.getElementById('pesanan-tbody');
+  tbody.innerHTML = filtered.map(o=>`
+    <tr>
+      <td style="font-weight:600;font-size:12px">${o.id}</td>
+      <td>${o.game}</td>
+      <td>${o.prod}</td>
+      <td style="color:var(--text2)">${o.uid}</td>
+      <td style="color:var(--accent);font-weight:700">Rp ${o.total.toLocaleString('id')}</td>
+      <td>${o.method}</td>
+      <td>${o.bukti
+        ? `<img src="${o.bukti==='demo'?'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="80" viewBox="0 0 120 80"><rect width="120" height="80" fill="%23162019"/><text x="60" y="44" text-anchor="middle" fill="%2322c55e" font-size="11" font-family="Inter">Bukti Bayar</text></svg>':o.bukti}" class="bukti-thumb" onclick="viewBukti(this.src)" alt="bukti">`
+        : '<span style="color:var(--text3);font-size:11px">Tidak ada</span>'}</td>
+      <td><span class="sbadge ${o.status==='Sukses'?'sb-ok':o.status==='Menunggu'?'sb-pend':'sb-fail'}">${o.status}</span></td>
+      <td>${o.status==='Menunggu'?`<div style="display:flex;gap:6px"><button class="btn-prim" style="padding:5px 10px;font-size:11px" onclick="updateOrder('${o.id}','Sukses')">✓ OK</button><button class="btn-del" onclick="updateOrder('${o.id}','Gagal')">✕</button></div>`:'<span style="color:var(--text3);font-size:12px">—</span>'}</td>
+    </tr>`).join('');
+}
+
+// Product photo
+function handleProductPhoto(input) {
+  if(!input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    newProductPhoto = e.target.result;
+    document.getElementById('photo-placeholder').style.display = 'none';
+    const wrap = document.getElementById('photo-preview-wrap');
+    wrap.innerHTML = `<img src="${newProductPhoto}" class="photo-thumb" alt="preview">`;
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function tambahProduk() {
+  const game = document.getElementById('ap-game').value.trim();
+  const prod = document.getElementById('ap-prod').value.trim();
+  const harga = parseInt(document.getElementById('ap-harga').value);
+  const disc = parseInt(document.getElementById('ap-disc').value)||0;
+  if(!game||!prod||!harga){showToast('Isi semua field terlebih dahulu','er');return}
+  products.push({id:prodIdCounter++,game,prod,harga,disc,photo:newProductPhoto});
+  newProductPhoto = null;
+  document.getElementById('ap-game').value='';
+  document.getElementById('ap-prod').value='';
+  document.getElementById('ap-harga').value='';
+  document.getElementById('ap-disc').value='';
+  document.getElementById('photo-placeholder').style.display = 'block';
+  document.getElementById('photo-preview-wrap').innerHTML = '';
+  renderProdukTable();
+  showToast('Produk berhasil ditambahkan!','ok');
+}
+
+function renderProdukTable() {
+  const tbody = document.getElementById('produk-tbody');
+  if(!tbody) return;
+  tbody.innerHTML = products.map(p=>`
+    <tr>
+      <td><div style="width:44px;height:44px;border-radius:8px;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid var(--border)">
+        ${p.photo?`<img src="${p.photo}" style="width:100%;height:100%;object-fit:cover">`:`<span style="font-size:20px">🎮</span>`}
+      </div></td>
+      <td style="font-weight:600">${p.game}</td>
+      <td>${p.prod}</td>
+      <td style="color:var(--accent);font-weight:700">Rp ${p.harga.toLocaleString('id')}</td>
+      <td><span class="sbadge sb-ok">-${p.disc}%</span></td>
+      <td><button class="btn-del" onclick="hapusProduk(${p.id})">Hapus</button></td>
+    </tr>`).join('');
+}
+
+function hapusProduk(id) {
+  products = products.filter(p=>p.id!==id);
+  renderProdukTable();
+  showToast('Produk dihapus','er');
+}
+
+// Rekening
+function tambahRekening() {
+  const jenis = document.getElementById('rek-jenis').value;
+  const num = document.getElementById('rek-num').value.trim();
+  const owner = document.getElementById('rek-owner').value.trim();
+  if(!num||!owner){showToast('Isi nomor dan nama pemilik','er');return}
+  payAccounts.push({id:accIdCounter++,type:jenis,icon:PAY_ICONS[jenis]||'💳',num,owner});
+  document.getElementById('rek-num').value='';
+  document.getElementById('rek-owner').value='';
+  renderPayAccGrid();
+  showToast(`Rekening ${jenis} berhasil ditambahkan!`,'ok');
+}
+
+function renderPayAccGrid() {
+  const el = document.getElementById('payacc-grid');
+  if(!el) return;
+  if(payAccounts.length===0){el.innerHTML='<div style="color:var(--text3);font-size:13px;grid-column:1/-1">Belum ada rekening ditambahkan</div>';return}
+  el.innerHTML = payAccounts.map(a=>`
+    <div class="payacc-card">
+      <button class="payacc-del" onclick="hapusRekening(${a.id})" title="Hapus">✕</button>
+      <div class="payacc-header"><span class="payacc-ico">${a.icon}</span><span class="payacc-name">${a.type}</span></div>
+      <div class="payacc-num">${a.num}</div>
+      <div class="payacc-atas">a.n. ${a.owner}</div>
+    </div>`).join('');
+}
+
+function hapusRekening(id) {
+  payAccounts = payAccounts.filter(a=>a.id!==id);
+  renderPayAccGrid();
+  showToast('Rekening dihapus','er');
+}
+
+// View bukti
+function viewBukti(src) {
+  document.getElementById('modal-img-el').src = src;
+  document.getElementById('img-modal').classList.add('show');
+}
+function closeModal() { document.getElementById('img-modal').classList.remove('show'); }
+
+// ============================================================ NAVIGATION ============================================================
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const p = document.getElementById('page-'+name);
+  if(p){p.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+}
+
+function aNav(sec, el) {
+  document.querySelectorAll('.asec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.sblink').forEach(l=>l.classList.remove('active'));
+  document.getElementById('admin-'+sec).classList.add('active');
+  el.classList.add('active');
+}
+
+// ============================================================ TOAST ============================================================
+function showToast(msg, type='ok') {
+  const t = document.getElementById('toast-el');
+  t.textContent = (type==='ok'?'✓ ':'✕ ') + msg;
+  t.className = 'toast show ' + type;
+  clearTimeout(t._t);
+  t._t = setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// ============================================================ COUNTDOWN ============================================================
+let secs = 2*3600+47*60+30;
+setInterval(()=>{
+  if(secs>0)secs--;
+  const h=String(Math.floor(secs/3600)).padStart(2,'0');
+  const m=String(Math.floor((secs%3600)/60)).padStart(2,'0');
+  const s=String(secs%60).padStart(2,'0');
+  const th=document.getElementById('th'),tm=document.getElementById('tm'),ts=document.getElementById('ts');
+  if(th)th.textContent=h;if(tm)tm.textContent=m;if(ts)ts.textContent=s;
+},1000);
+
+// ============================================================ INIT ============================================================
+renderFlashGrid();
+renderGameGrid('ggrid-pop', GAMES);
+renderGameGrid('ggrid-all', ALL_SVC);
+</script>
+</body>
+</html>
